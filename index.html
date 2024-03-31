@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+            .button {
+                width: 50%;
+                cursor: pointer;
+                height: 20%;
+                font-size: 40px;
+                background: linear-gradient(to bottom,  rgba(235,233,249,1) 0%,rgba(216,208,239,1) 25%,rgba(206,199,236,1) 65%,rgba(193,191,234,1) 100%);
+            }
+
+            div{
+                height: 687px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            body{
+            background: linear-gradient(to bottom,  rgba(147,206,222,1) 0%,rgba(117,189,209,1) 41%,rgba(73,165,191,1) 100%);
+            }
+
+    </style>
+</head>
+<body>
+    <div class="main">
+        <button class="button animate__bounceIn" onclick="goPlay()">ИГРАТЬ!</button>
+    </div>
+
+    <script>
+        function getRandomIntNumber(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+
+        function goPlay(){
+            
+            const min_number = 1;
+            const max_number = 10;
+            const attempts = 5;
+            let remaining_attempts = attempts;
+            let random_number = getRandomIntNumber(min_number, max_number);           
+            alert(`Здравствуй! Давай сыграем в игру "Угадай число"!\nУ вас ${attempts} попыток, чтобы отгадать число от ${min_number} до ${max_number}!`);
+            console.log(random_number)
+            while (remaining_attempts > 0){
+                let guess = prompt(`У вас осталось ${remaining_attempts} попыток!\nУгадайте число:`);
+                
+                if (guess===null){
+                    if (confirm("Закончить игру?")){
+                        return;
+                    }
+                    else{continue;}
+                }
+                
+                guess = parseInt(guess);
+                if (isNaN(guess) || guess < min_number || guess > max_number){
+                    alert("Введите корректные значения!");
+                    continue;
+                }
+
+
+                if (guess === random_number) {
+                    if (confirm(`Вы угадали, загаданное число: ${random_number}!\n Хотите начать игру заново?`)){
+                    goPlay();
+                    }
+                    else {return};
+                    }
+                else if (guess < random_number) {
+                    alert(`Загаданное число больше ${guess}`);
+                    }
+                else {
+                    alert(`Загаданное число меньше ${guess}`);
+                    }
+
+            remaining_attempts--;
+
+            if (remaining_attempts === 0){
+                if (confirm(`Вы не угадали, загаданное чсло было: ${random_number}.\n Хотите начать игру заново?`)){
+                    goPlay();
+                }
+                else {return};
+                }
+            }
+        }
+    </script>
+</body>
+</html>
